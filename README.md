@@ -1,6 +1,6 @@
 # HTPA32x32d Capture Image
 
-##项目目标
+## 项目目标
 用树莓派通过I2c读取HTPA32x32d的图像，带温度数据。
 
 ## 要求
