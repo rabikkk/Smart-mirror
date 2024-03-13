@@ -47,15 +47,16 @@ if you are not using the first channel, you can also check other channels like 0
 <img src="Markdown/images/learn_raspberry_pi_i2c-detect.png">
 Then you need to set your I2c speed. In a dialogue with HTPA technical engineers, we were told that setting it to 1Mhz would be healthy, hence we make these settings.
 
-
+```
 sudo nano /boot/config.txt
+```
 After adding the line "dtparam=i2c_arm=on,i2c_arm_baudrate=1000000", save and exit the file.
 
 
 sudo reboot
 you can restart the device.
 
-Code Content
+
 eeprom-test.py
 htpa-test.py
 htpa.py
@@ -63,19 +64,20 @@ capture_display.py
 Fully Working Project
 --> htpa.py is written as a library.
 
-Libraries required for the library:
-
-
+Libraries required for the library(python3):
+```
  pip install python-periphery
  sudo apt-get install python-opencv
  pip install opencv-python
-Note: Due to some requirements, our code works in python2, it will not work if you try to run it in python3.
+```
+
 
 Although the i2cdetect command recognizes the device on the raspberry pi, sometimes the sensors can cause problems. I think it means your device is burnt out, so before running the main code, we need to test if we can communicate with the EEPROM and the device.
 
-
+```
 python eeprom-test.py
 python htpa-test.py
+```
 --> after you are sure that the device is working perfectly, the only thing you need to do is to run
 
 
