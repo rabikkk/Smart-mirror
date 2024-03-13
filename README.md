@@ -1,31 +1,31 @@
 # HTPA32x32d Capture Image
 
-## Projenin amacı
-Raspberry pi ile beraber HTPA32x32d 'den görüntü almak.
+## Purpose of the Project
+To capture images from HTPA32x32d with Raspberry pi.
 
 
-## Gereksinimler
+## Requirements
 
 
-### Raspberry pi Konfigurasyonu
+### Raspberry pi Configuration
 
 
-Raspberry-pi 4 Pin Tablosu
+Raspberry-pi 4 Pinout
 
 
 <img src="Markdown/images/raspberry-pi-4.png">
 
 
-İlk olarak I2C ayarlarını yapıyoruz.
+First, we configure the I2C settings.
 
 
-#### [I2C'yi Yapılandırma](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c)
+#### [Configuring I2C](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c)
 
 
-Konsolu açtıktan sonra `Sudo raspi-config` yazalım.
+After opening the console, type `sudo raspi-config`.
 
 
-Ardından aşağıdaki adımları takip edelim.
+Then follow the steps below.
 
 <img src="Markdown/images/learn_raspberry_pi_interfacing.png">
 <img src="Markdown/images/learn_raspberry_pi_advancedopt.png">
@@ -34,72 +34,58 @@ Ardından aşağıdaki adımları takip edelim.
 <img src="Markdown/images/learn_raspberry_pi_i2ckernel.png">
                 
                 
-Cihazın bağlantılı olup olmadığını görmek için 
-```ruby 
-sudo apt-get install -y i2c-tools
-``` 
-kütüphanesini indirin ve konsola    
-```ruby 
-sudo i2cdetect -y 1
+To check if the device is connected or not, 
+download the 
 ```
-yazın eğer birinci kanalı kullanmıyorsanız 0-2-3 gibi kanallarada bakabilirsiniz.                    
+sudo apt-get install -y i2c-tools
+```
+
+library and type into the console
+sudo i2cdetect -y 1
+if you are not using the first channel, you can also check other channels like 0-2-3.
 
 <img src="Markdown/images/learn_raspberry_pi_i2c-detect.png">
-              
-Daha sonra I2c hızınızı ayarlamanız gerekir. HTPA teknik mühendisleri ile bir diyaloğumuzda 1Mhz ayarlamamızız sağlıklı olacağı söylenmişti ona istinaden bu ayarları yapıyoruz.
- 
- ```ruby
- sudo nano /boot/config.txt
- ```
- 
- 
- "dtparam=i2c_arm=on,i2c_arm_baudrate=1000000" satırı ekledikten sonra dosyayı kaydedip çıkın.
- 
- 
- ```ruby 
- sudo reboot
- ```
- cihazı yeniden başlatabilirsiniz.
+Then you need to set your I2c speed. In a dialogue with HTPA technical engineers, we were told that setting it to 1Mhz would be healthy, hence we make these settings.
 
-                
-## Kod İçeriği
-### eeprom-test.py
-### htpa-test.py
-### htpa.py
-### capture_display.py
 
-### Tam çalışan Proje
+sudo nano /boot/config.txt
+After adding the line "dtparam=i2c_arm=on,i2c_arm_baudrate=1000000", save and exit the file.
 
---> htpa.py kütüphane olarak yazılmıştır.
 
-Kütüphane için gerekli hazır kütüphaneler:
-```ruby
+sudo reboot
+you can restart the device.
+
+Code Content
+eeprom-test.py
+htpa-test.py
+htpa.py
+capture_display.py
+Fully Working Project
+--> htpa.py is written as a library.
+
+Libraries required for the library:
+
+
  pip install python-periphery
  sudo apt-get install python-opencv
  pip install opencv-python
-```
+Note: Due to some requirements, our code works in python2, it will not work if you try to run it in python3.
+
+Although the i2cdetect command recognizes the device on the raspberry pi, sometimes the sensors can cause problems. I think it means your device is burnt out, so before running the main code, we need to test if we can communicate with the EEPROM and the device.
 
 
-Not:kodumuz bazı gereksinimlerden dolayı python2'de çalışmaktadır python3'te çalıştırmaya kalktığınızda proje çalışmayacatır.
-
-Ne kadar `i2cdetect` komutuyla cihazı raspberry pi tanısada bazen sensörler sıkıntı çıkartabiliyor. Sanırım cihazınız yanmış demek oluyor bunun için ana kodu çalıştırmadan önce eeprom ve cihazla haberleşebiliyormuyuz test etmemiz gerekir.
-
-
-```ruby
 python eeprom-test.py
 python htpa-test.py
-```
+--> after you are sure that the device is working perfectly, the only thing you need to do is to run
 
---> cihazın tam çalıştığına emin olduktan sonra yapmanız gereken tek şey 
-```ruby 
+
 python capture_display.py
+Outputs
+Additional Information
+One of the sources I got the most help from was the datasheet while the other was about image capture, EEPROM settings
+
+<span style="color:red">The datasheet states that the framerate is 60 Hz, never fall for it; the maximum speed you can achieve is around 8Hz </span>.
+
 ```
-çalıştırmaktır.
-## Çıktılar
-
-## Ekstra Bilgiler
-
-En çok yardım aldığım kaynaklardan biri [datasheet](https://www.prwa.com/sites/default/files/files-webpage/2020/3878/thermal-imaging-sensor-specs.pdf)'ken diğeri ise [görüntü alma](http://exclav.es/2016/10/26/talkin-ir/),[eeprom ayarları](http://exclav.es/2016/12/13/calibrating-heimann/)
-
-
-# <span style="color:red">Datasheet'te framerate'in 60 Hz olaağı yazmaktadır buna asla kanmayın çıkabileceğiniz maximum hız 8Hz civarlarında olmaktadır </span>. 
+Make sure to double-check the translation for accuracy and context, especially technical terms and device-specific jargon, to ensure they align with the correct specifications and usage in your domain.
+```
