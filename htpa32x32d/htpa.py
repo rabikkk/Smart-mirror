@@ -104,8 +104,8 @@ class HTPA:
 		GlobalGain = eeprom[0x0055] + (eeprom[0x0056] << 8)
 		Pmin = eeprom[0x0000:0x0004]
 		Pmax = eeprom[0x0004:0x0008]
-		Pmin = struct.unpack('f', reduce(lambda a,b: a+b, [chr(p) for p in Pmin]))[0]
-		Pmax = struct.unpack('f', reduce(lambda a,b: a+b, [chr(p) for p in Pmax]))[0]
+		Pmin = struct.unpack('f', bytes(Pmin))[0]
+		Pmax = struct.unpack('f', bytes(Pmax))[0]
 		self.PixC = (P * (Pmax - Pmin) / 65535. + Pmin) * (epsilon / 100) * float(GlobalGain) / 100
 
 		self.gradScale = eeprom[0x0008]
@@ -114,9 +114,9 @@ class HTPA:
 		self.VddScaling = eeprom[0x004E]
 
 		PTATgradient = eeprom[0x0034:0x0038]
-		self.PTATgradient = struct.unpack('f', reduce(lambda a,b: a+b, [chr(p) for p in PTATgradient]))[0]
+		self.PTATgradient = struct.unpack('f', bytes(PTATgradient))[0]
 		PTAToffset = eeprom[0x0038:0x003c]
-		self.PTAToffset = struct.unpack('f', reduce(lambda a,b: a+b, [chr(p) for p in PTAToffset]))[0]
+		self.PTAToffset = struct.unpack('f', bytes(PTAToffset))[0]
 
 	def temperature_compensation(self, im, ptat):
 	    comp = np.zeros((32,32))
