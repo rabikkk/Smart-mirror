@@ -91,3 +91,5 @@ One of the sources I got the most help from was the datasheet while the other wa
 ```
 Make sure to double-check the translation for accuracy and context, especially technical terms and device-specific jargon, to ensure they align with the correct specifications and usage in your domain.
 ```
+![微信截图_20240313232549](https://github.com/zhaochengwei/HTPA32x32d_Raspberry_pi/assets/13081827/455b83c7-d131-4e3e-a960-77ddb73ab519)
+
