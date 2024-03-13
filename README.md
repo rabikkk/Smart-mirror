@@ -26,7 +26,7 @@
 <img src="Markdown/images/learn_raspberry_pi_i2ckernel.png">
                 
                 
-安装i2c-tools检查器件是否正常连接
+2.安装i2c-tools检查器件是否正常连接
 ```
 sudo apt-get install -y i2c-tools
 sudo i2cdetect -y 1
@@ -34,8 +34,8 @@ sudo i2cdetect -y 1
 如果你没有使用第一个通道，你也可以检查其他通道，比如0-2-3
 
 <img src="Markdown/images/learn_raspberry_pi_i2c-detect.png">
-然后你需要设置你的I2C速度。在与HTPA技术工程师的对话中，我们被告知将其设置为1Mhz会比较好，因此我们进行了这些设置。
 
+3.设置I2C速度。在与HTPA技术工程师的对话中，我们被告知将其设置为1Mhz会比较好，因此我们进行了这些设置。
 ```
 sudo nano /boot/config.txt
 ```
@@ -74,7 +74,7 @@ python capture_display.py
 ```
 ![微信截图_20240313232549](https://github.com/zhaochengwei/HTPA32x32d_Raspberry_pi/assets/13081827/455b83c7-d131-4e3e-a960-77ddb73ab519)
 
-## Additional Information
+### Additional Information
 
 我得到最多帮助的一个来源是数据手册，而另一个则是关于图像捕捉、EEPROM设置的。
 
